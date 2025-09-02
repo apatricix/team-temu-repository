@@ -111,7 +111,7 @@ void Multiplicacion(int nc1, int nc2, int ncMax)
 void suma( int n1,int n2, int ncMax)
 {
     int result, i;
-    char Resp[N], Resp[N], Resp[N];
+    char Resp[N], Resp2[N], Resp3[N];
     strcpy(Resp2, "correcto");
 	strcpy(Resp3, "incorrecto");
 
@@ -132,7 +132,7 @@ void suma( int n1,int n2, int ncMax)
 		}
 		else
 		{
-         printf("incorrecto\n")
+         printf("incorrecto\n");
 		 strcpy(Resp, Resp3);
 		}
 }
@@ -172,7 +172,7 @@ int main(int argc, char *argv[]) {
 		printf("Suma\n");
 		GeneraRandomforMult(&multdr, &NCM);
 		GeneraRandomforMult(&multcndo, &NCM);
-		suma(multdr, multdr, multcndo, NCM);
+		suma(multdr, multdr, NCM);
 		break;
 		case 2: printf("Resta\n");
 		
