@@ -8,8 +8,10 @@
 void GeneraRandom(int *V);
 void GeneraRandomforMult(int *V, int *ncMax);
 void Multiplicacion(int nc1, int nc2, int ncMax);
+void suma(int n1, int n2,int ncMAX);
 void ShareYourPageNumber(int*NumP);
 void PreguntaChistosa(int *Op);
+
 
 /*Funciones*/
 
@@ -110,8 +112,8 @@ void suma( int n1,int n2, int ncMax)
 {
     int result, i;
     char Resp[N], Resp[N], Resp[N];
-    strcpy(Resp2[N], "correcto");
-	strcpy(Resp3[N], "incorrecto");
+    strcpy(Resp2, "correcto");
+	strcpy(Resp3, "incorrecto");
 
 	do{
 		printf("%d?\n", n1);
@@ -120,14 +122,21 @@ void suma( int n1,int n2, int ncMax)
 		{
 			printf("__");
 		}
-		printf("\n);
+		printf("\n");
 		scanf("%d", &result);
 
 		if(result==n1+n2)
 		{
+		printf("correcto\n");
+		strcpy(Resp, Resp2);
 		}
-		
-	}
+		else
+		{
+         printf("incorrecto\n")
+		 strcpy(Resp, Resp3);
+		}
+}
+		while(strcmp(Resp, Resp2) !=0);
 }
 
 
@@ -159,8 +168,11 @@ int main(int argc, char *argv[]) {
 		scanf("%d", &opc);
 		switch (opc)
 		{
-		case 1: printf("Suma\n");
-		
+		case 1: 
+		printf("Suma\n");
+		GeneraRandomforMult(&multdr, &NCM);
+		GeneraRandomforMult(&multcndo, &NCM);
+		suma(multdr, multdr, multcndo, NCM);
 		break;
 		case 2: printf("Resta\n");
 		
@@ -185,5 +197,4 @@ int main(int argc, char *argv[]) {
 		}
 	} while(opc < 1 && opc > 4);
 	return 0;
-	//Hola Alan
 }
