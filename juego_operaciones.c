@@ -3,17 +3,12 @@
 //• Iván Alejandro Castañón Chiquito
 //• America Patricia Morales Avalos
 
-
-
-
-
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
 #include <string.h>
 #define N 100
 
-/* Prototipos */
 int EligeBien();
 void SwitchFun(int opC);
 void GeneraRandomSum(int Arr[N], int *ncMax, int Nc);
@@ -27,10 +22,9 @@ void conjuntoSuma(int as[N], int np, int *may, int *ncm, int *resp);
 void ConjuntoResta(int *mndo, int *stndo, int np, int *ncm, int *may);
 void FuncEsp1(int *res);
 void ConjuntoMultiplicacion(int *mltd, int *mltn, int np, int *may, int *ncm);
+void Division(int nc1, int nc2, int ncMax);
+void ConjuntoDivision(int *dividendo, int *divisor, int np, int *may, int *ncm);
 
-/* Funciones */
-
-// Genera un número aleatorio con base en las cifras pedidas
 void GeneraRandomforMult(int *V, int *ncMax) 
 {
     int nc, i, min=1, max=1;
@@ -49,7 +43,6 @@ void GeneraRandomforMult(int *V, int *ncMax)
         *ncMax = nc;
 }
 
-// Pregunta cuántas operaciones se quieren hacer
 void ShareYourPageNumber(int *NumP) 
 {
     printf("Ingresa el numero de operaciones que quieres hacer\n");
@@ -60,14 +53,12 @@ void ShareYourPageNumber(int *NumP)
     } while(*NumP < 0 || *NumP > N);
 }
 
-// Pregunta si se quiere continuar o salir
 void PreguntaChistosa(int *Op)
 {
     printf("¿Deseas salir?\nSi = 0 o No = 1 (ponlo en numeros)\n");
     scanf("%d", Op);
 }
 
-// Genera números aleatorios para suma
 void GeneraRandomSum(int Arr[N], int *ncMax, int Nc) 
 {
     int nc, i, min, max, k;
@@ -90,7 +81,6 @@ void GeneraRandomSum(int Arr[N], int *ncMax, int Nc)
     }
 }
 
-// Multiplicación
 void Multiplicacion(int nc1, int nc2, int ncMax)
 {
     int result, i;
@@ -119,7 +109,6 @@ void Multiplicacion(int nc1, int nc2, int ncMax)
     } while(strcmp(Resp, Resp2) != 0);
 }
 
-// Suma
 void suma(int ArrSum[N], int ncMax, int NumN)
 {
     int result, i, suma, k;
@@ -135,13 +124,11 @@ void suma(int ArrSum[N], int ncMax, int NumN)
         }
         for(k=0; k < NumN; k++)
             suma += ArrSum[k];
-
         for(i=0; i <= ncMax; i++)
         {
             printf("__");
         }
         printf("\n");
-
         scanf("%d", &result);
         if(result==suma)
         {
@@ -156,7 +143,6 @@ void suma(int ArrSum[N], int ncMax, int NumN)
     } while(strcmp(Resp, Resp2) != 0);
 }
 
-// Resta
 void Resta(int nc1, int nc2, int ncMax)
 {
     int result, i;
@@ -185,7 +171,6 @@ void Resta(int nc1, int nc2, int ncMax)
     } while(strcmp(Resp, Resp2) != 0);
 }
 
-// Conjunto de sumas
 void conjuntoSuma(int as[N], int np, int *may, int *ncm, int *resp)
 {
     int i;
@@ -199,8 +184,6 @@ void conjuntoSuma(int as[N], int np, int *may, int *ncm, int *resp)
     }
 }
 
-// Validación para la cantidad de números a sumar
-// Ahora acepta desde 1 hasta 4
 void FuncEsp1(int *resp)
 {
     do {
@@ -208,7 +191,6 @@ void FuncEsp1(int *resp)
     } while(*resp < 1 || *resp > 4);
 }
 
-// Conjunto de restas
 void ConjuntoResta(int *mndo, int *stndo, int np, int *ncm, int *may)
 {
     int aux, i;
@@ -227,7 +209,6 @@ void ConjuntoResta(int *mndo, int *stndo, int np, int *ncm, int *may)
     }
 }
 
-// Conjunto de multiplicaciones
 void ConjuntoMultiplicacion(int *mltd, int *mltn, int np, int *may, int *ncm)
 {
     int i;
@@ -240,7 +221,48 @@ void ConjuntoMultiplicacion(int *mltd, int *mltn, int np, int *may, int *ncm)
     }
 }
 
-// Menú principal
+void Division(int nc1, int nc2, int ncMax)
+{
+    int result, i;
+    char Resp[N], Resp2[N], Resp3[N];
+    strcpy(Resp2, "Correcto:)");
+    strcpy(Resp3, "Incorrecto:(");
+    if(nc2 == 0)
+        nc2 = 1;
+    do{
+        printf(" %d\n", nc1);
+        printf("/%d\n", nc2);
+        for(i = 0; i <= ncMax; i++)
+        {
+            printf("-");
+        }
+        printf("\n");
+        scanf("%d", &result);
+        if(result == nc1 / nc2)
+        {
+            printf("Correcto :)\n");
+            strcpy(Resp, Resp2);
+        }
+        else
+        {
+            printf("Incorrecto :(\n");
+            strcpy(Resp, Resp3);
+        }
+    } while(strcmp(Resp, Resp2) != 0);
+}
+
+void ConjuntoDivision(int *dividendo, int *divisor, int np, int *may, int *ncm)
+{
+    int i;
+    for(i = 0; i < np && *may != 0; i++)
+    {
+        GeneraRandomforMult(dividendo, ncm);
+        GeneraRandomforMult(divisor, ncm);
+        Division(*dividendo, *divisor, *ncm);
+        PreguntaChistosa(may);
+    }
+}
+
 int EligeBien()
 {
     int opC;
@@ -252,7 +274,6 @@ int EligeBien()
     return opC;
 }
 
-// Switch principal
 void SwitchFun(int opC)
 {
     int NP=0, May=1, NCM=0;
@@ -274,13 +295,15 @@ void SwitchFun(int opC)
         ConjuntoMultiplicacion(&multdr, &multcndo, NP, &May, &NCM);
         break;
     case 4: printf("Division\n");
+        int divd, divs;
+        ShareYourPageNumber(&NP);
+        ConjuntoDivision(&divd, &divs, NP, &May, &NCM);
         break;
     default: printf("Adios\n");
         break;
     }
 }
 
-// Función principal
 int main(int argc, char *argv[]) {
     int opc=0;
     srand(time(NULL));
