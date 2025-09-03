@@ -21,6 +21,15 @@ void ConjuntoMultiplicacion(int *mltd, int *mltn, int np, int *may, int *ncm);
 
 /*Funciones*/
 
+// contar cifras de un número
+int cuenta_cifras(int x) {
+    int c = 0;
+    if (x == 0) return 1;
+    if (x < 0) x = -x;
+    while (x > 0) { x /= 10; c++; }
+    return c;
+}
+
 // Funcion de generar numeros randoms de acuerdo a sus cifras
 void GeneraRandomforMult(int *V, int *ncMax)
 {
@@ -122,29 +131,21 @@ void suma(int ArrSum[N], int ncMax, int NumN)
     do {
         suma = 0;
         printf(" %d\n", ArrSum[0]);
-        for (k = 1; k < NumN; k++) { // corregido
+        for (k = 1; k < NumN; k++) {
             printf("+%d\n", ArrSum[k]);
         }
 
         for (k = 0; k < NumN; k++)
             suma += ArrSum[k];
 
-        // contar cifras del mayor número y del resultado
-        int temp, cifras, maxCifras = 0;
+        // calcular ancho real (cifras mayores entre sumandos y resultado)
+        int maxCifras = 0;
         for (k = 0; k < NumN; k++) {
-            temp = ArrSum[k];
-            cifras = 0;
-            if (temp == 0) cifras = 1;
-            if (temp < 0) temp = -temp;
-            while (temp > 0) { temp /= 10; cifras++; }
-            if (cifras > maxCifras) maxCifras = cifras;
+            int dig = cuenta_cifras(ArrSum[k]);
+            if (dig > maxCifras) maxCifras = dig;
         }
-        temp = suma;
-        cifras = 0;
-        if (temp == 0) cifras = 1;
-        if (temp < 0) temp = -temp;
-        while (temp > 0) { temp /= 10; cifras++; }
-        if (cifras > maxCifras) maxCifras = cifras;
+        int digRes = cuenta_cifras(suma);
+        if (digRes > maxCifras) maxCifras = digRes;
 
         for (i = 0; i < maxCifras; i++) {
             printf("__");
