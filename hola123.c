@@ -22,7 +22,6 @@ void ConjuntoMultiplicacion(int *mltd, int *mltn, int np, int *may, int *ncm);
 /* Funciones */
 
 // Genera un número aleatorio con base en las cifras pedidas
-// Se corrige validación de rango (1 a 7)
 void GeneraRandomforMult(int *V, int *ncMax) 
 {
     int nc, i, min=1, max=1;
@@ -42,7 +41,6 @@ void GeneraRandomforMult(int *V, int *ncMax)
 }
 
 // Pregunta cuántas operaciones se quieren hacer
-// Validación corregida para no aceptar negativos o más de N
 void ShareYourPageNumber(int *NumP) 
 {
     printf("Ingresa el numero de operaciones que quieres hacer\n");
@@ -61,13 +59,12 @@ void PreguntaChistosa(int *Op)
 }
 
 // Genera números aleatorios para suma
-// Se reinicia min y max en cada iteración para evitar acumulaciones
 void GeneraRandomSum(int Arr[N], int *ncMax, int Nc) 
 {
     int nc, i, min, max, k;
-    for(k = 0; k < Nc; k++)   // solo se generan los que pidió el usuario
+    for(k = 0; k < Nc; k++)
     {
-        min = 1; max = 1;     // se reinicia aquí para que no arrastre valores
+        min = 1; max = 1;
         printf("Selecciona el numero de cifras deseado (rango de 1 a 7)\n");
         do{
             scanf("%d", &nc);
@@ -85,7 +82,6 @@ void GeneraRandomSum(int Arr[N], int *ncMax, int Nc)
 }
 
 // Multiplicación
-// Se corrige uso de strcpy en lugar de strcat (evita basura de memoria)
 void Multiplicacion(int nc1, int nc2, int ncMax)
 {
     int result, i;
@@ -115,7 +111,6 @@ void Multiplicacion(int nc1, int nc2, int ncMax)
 }
 
 // Suma
-// Se corrigió ciclo para imprimir solo la cantidad de números solicitada
 void suma(int ArrSum[N], int ncMax, int NumN)
 {
     int result, i, suma, k;
@@ -125,7 +120,7 @@ void suma(int ArrSum[N], int ncMax, int NumN)
     do{
         suma=0;
         printf(" %d\n", ArrSum[0]);
-        for(k=1; k < NumN; k++)   // antes imprimía de más, ahora solo los requeridos
+        for(k=1; k < NumN; k++)
         {
             printf("+%d\n", ArrSum[k]);
         }
@@ -153,7 +148,6 @@ void suma(int ArrSum[N], int ncMax, int NumN)
 }
 
 // Resta
-// Igual que multiplicación, se cambió strcat por strcpy
 void Resta(int nc1, int nc2, int ncMax)
 {
     int result, i;
@@ -183,31 +177,29 @@ void Resta(int nc1, int nc2, int ncMax)
 }
 
 // Conjunto de sumas
-// Se corrigió para que genere solo la cantidad exacta pedida
 void conjuntoSuma(int as[N], int np, int *may, int *ncm, int *resp)
 {
     int i;
     for(i=0; i < np && *may != 0; i++)
     {
-        printf("Dame la cantidad de numeros que deseas sumar de 2 a 4\n");
+        printf("Dame la cantidad de numeros que deseas sumar de 1 a 4\n");
         FuncEsp1(resp);
-        GeneraRandomSum(as, ncm, *resp);   // genera la cantidad que pidió el usuario
-        suma(as, *ncm, *resp);             // se pasa esa misma cantidad a la función suma
+        GeneraRandomSum(as, ncm, *resp);
+        suma(as, *ncm, *resp);
         PreguntaChistosa(may);
     }
 }
 
 // Validación para la cantidad de números a sumar
-// Se corrigió condición del while, antes nunca funcionaba bien
+// Ahora acepta desde 1 hasta 4
 void FuncEsp1(int *resp)
 {
     do {
         scanf("%d", resp);
-    } while(*resp < 2 || *resp > 4);
+    } while(*resp < 1 || *resp > 4);
 }
 
 // Conjunto de restas
-// Se corrigió para que no se usen dos veces el mismo puntero
 void ConjuntoResta(int *mndo, int *stndo, int np, int *ncm, int *may)
 {
     int aux, i;
@@ -240,7 +232,6 @@ void ConjuntoMultiplicacion(int *mltd, int *mltn, int np, int *may, int *ncm)
 }
 
 // Menú principal
-// Se corrigió validación de rango con "||"
 int EligeBien()
 {
     int opC;
@@ -274,7 +265,6 @@ void SwitchFun(int opC)
         ConjuntoMultiplicacion(&multdr, &multcndo, NP, &May, &NCM);
         break;
     case 4: printf("Division\n");
-        // pendiente de implementar
         break;
     default: printf("Adios\n");
         break;
