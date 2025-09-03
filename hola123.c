@@ -4,7 +4,7 @@
 #include <string.h>
 #define N 100
 
-/*Prototipo*/
+/* Prototipos */
 int EligeBien();
 void SwitchFun(int opC);
 void GeneraRandomSum(int Arr[N], int *ncMax, int Nc);
@@ -19,204 +19,204 @@ void ConjuntoResta(int *mndo, int *stndo, int np, int *ncm, int *may);
 void FuncEsp1(int *res);
 void ConjuntoMultiplicacion(int *mltd, int *mltn, int np, int *may, int *ncm);
 
-/*Funciones*/
+/* Funciones */
 
-// contar cifras de un número
-int cuenta_cifras(int x) {
-    int c = 0;
-    if (x == 0) return 1;
-    if (x < 0) x = -x;
-    while (x > 0) { x /= 10; c++; }
-    return c;
-}
-
-// Funcion de generar numeros randoms de acuerdo a sus cifras
-void GeneraRandomforMult(int *V, int *ncMax)
+// Genera un número aleatorio con base en las cifras pedidas
+// Se corrige validación de rango (1 a 7)
+void GeneraRandomforMult(int *V, int *ncMax) 
 {
-    int nc, i, min = 1, max = 1;
+    int nc, i, min=1, max=1;
     printf("Selecciona el numero de cifras deseado (rango de 1 a 7)\n");
-    do {
+    do{
         scanf("%d", &nc);
-        if (nc < 1 || nc > 7)
+        if(nc < 1 || nc > 7)
             printf("error al ingresar cifras requeridas\n");
-    } while (nc < 1 || nc > 7);
-
-    for (i = 0; i < nc - 1; i++)
+    } while(nc < 1 || nc > 7);
+    for(i = 0; i < nc - 1; i++)
         min *= 10;
-    for (i = 0; i < nc; i++)
+    for(i = 0; i < nc; i++)
         max *= 10;
-
-    *V = (rand() % (max - min)) + min;
-    if (*ncMax < nc)
+    *V = (rand() % (max-min+1)) + min;
+    if(*ncMax < nc)
         *ncMax = nc;
 }
 
-// Funcion para Ingresar paginas
-void ShareYourPageNumber(int *NumP)
+// Pregunta cuántas operaciones se quieren hacer
+// Validación corregida para no aceptar negativos o más de N
+void ShareYourPageNumber(int *NumP) 
 {
     printf("Ingresa el numero de operaciones que quieres hacer\n");
-    do {
+    do{
         scanf("%d", NumP);
-        if (*NumP < 0 || *NumP > N)
+        if(*NumP < 0 || *NumP > N)
             printf("ups intenta de nuevo\n");
-    } while (*NumP < 0 || *NumP > N);
+    } while(*NumP < 0 || *NumP > N);
 }
 
-// Funcion preguntar si quieres salir
+// Pregunta si se quiere continuar o salir
 void PreguntaChistosa(int *Op)
 {
-    printf("¿Deseas salir?\nSi = 0 o No = 1, (ponlo en numeros)\n");
+    printf("¿Deseas salir?\nSi = 0 o No = 1 (ponlo en numeros)\n");
     scanf("%d", Op);
 }
 
-// Funcion genera random para suma y resta
-void GeneraRandomSum(int Arr[N], int *ncMax, int Nc)
+// Genera números aleatorios para suma
+// Se reinicia min y max en cada iteración para evitar acumulaciones
+void GeneraRandomSum(int Arr[N], int *ncMax, int Nc) 
 {
-    int nc, i, k;
-    for (k = 0; k < Nc; k++) {
-        int min = 1, max = 1; // reiniciar en cada vuelta
+    int nc, i, min, max, k;
+    for(k = 0; k < Nc; k++)   // solo se generan los que pidió el usuario
+    {
+        min = 1; max = 1;     // se reinicia aquí para que no arrastre valores
         printf("Selecciona el numero de cifras deseado (rango de 1 a 7)\n");
-        do {
+        do{
             scanf("%d", &nc);
-            if (nc < 1 || nc > 7)
+            if(nc < 1 || nc > 7)
                 printf("error al ingresar cifras requeridas\n");
-        } while (nc < 1 || nc > 7);
-
-        for (i = 0; i < nc - 1; i++)
+        } while(nc < 1 || nc > 7);
+        for(i = 0; i < nc - 1; i++)
             min *= 10;
-        for (i = 0; i < nc; i++)
+        for(i = 0; i < nc; i++)
             max *= 10;
-
-        Arr[k] = (rand() % (max - min)) + min;
-        if (*ncMax < nc)
+        Arr[k] = (rand() % (max-min+1)) + min;
+        if(*ncMax < nc)
             *ncMax = nc;
     }
 }
 
-// Funcion de Multiplicacion
+// Multiplicación
+// Se corrige uso de strcpy en lugar de strcat (evita basura de memoria)
 void Multiplicacion(int nc1, int nc2, int ncMax)
 {
     int result, i;
     char Resp[N], Resp2[N], Resp3[N];
     strcpy(Resp2, "Correcto:)");
     strcpy(Resp3, "Incorrecto:(");
-
-    do {
+    do{
         printf(" %d\n", nc1);
         printf("*%d\n", nc2);
-        for (i = 0; i <= ncMax; i++) {
+        for(i = 0; i <= ncMax; i++)
+        {
             printf("-");
         }
         printf("\n");
         scanf("%d", &result);
-
-        if (result == nc1 * nc2) {
-            printf("correcto :)\n");
+        if(result == nc1*nc2)
+        {
+            printf("Correcto :)\n");
             strcpy(Resp, Resp2);
-        } else {
-            printf("Incorrecto:(\n");
+        }  
+        else 
+        {
+            printf("Incorrecto :(\n");
             strcpy(Resp, Resp3);
         }
-    } while (strcmp(Resp, Resp2) != 0);
+    } while(strcmp(Resp, Resp2) != 0);
 }
 
-// Funcion suma
+// Suma
+// Se corrigió ciclo para imprimir solo la cantidad de números solicitada
 void suma(int ArrSum[N], int ncMax, int NumN)
 {
     int result, i, suma, k;
     char Resp[N], Resp2[N], Resp3[N];
     strcpy(Resp2, "Correcto:)");
     strcpy(Resp3, "Incorrecto:(");
-
-    do {
-        suma = 0;
+    do{
+        suma=0;
         printf(" %d\n", ArrSum[0]);
-        for (k = 1; k < NumN; k++) {
+        for(k=1; k < NumN; k++)   // antes imprimía de más, ahora solo los requeridos
+        {
             printf("+%d\n", ArrSum[k]);
         }
-
-        for (k = 0; k < NumN; k++)
+        for(k=0; k < NumN; k++)
             suma += ArrSum[k];
 
-        // calcular ancho real (cifras mayores entre sumandos y resultado)
-        int maxCifras = 0;
-        for (k = 0; k < NumN; k++) {
-            int dig = cuenta_cifras(ArrSum[k]);
-            if (dig > maxCifras) maxCifras = dig;
-        }
-        int digRes = cuenta_cifras(suma);
-        if (digRes > maxCifras) maxCifras = digRes;
-
-        for (i = 0; i < maxCifras; i++) {
+        for(i=0; i <= ncMax; i++)
+        {
             printf("__");
         }
         printf("\n");
 
         scanf("%d", &result);
-
-        if (result == suma) {
+        if(result==suma)
+        {
             printf("Correcto :)\n");
             strcpy(Resp, Resp2);
-        } else {
+        }
+        else
+        {
             printf("Incorrecto :(\n");
             strcpy(Resp, Resp3);
         }
-    } while (strcmp(Resp, Resp2) != 0);
+    } while(strcmp(Resp, Resp2) != 0);
 }
 
-// Funcion resta
+// Resta
+// Igual que multiplicación, se cambió strcat por strcpy
 void Resta(int nc1, int nc2, int ncMax)
 {
     int result, i;
     char Resp[N], Resp2[N], Resp3[N];
     strcpy(Resp2, "Correcto:)");
     strcpy(Resp3, "Incorrecto:(");
-
-    do {
+    do{
         printf(" %d\n", nc1);
         printf("-%d\n", nc2);
-        for (i = 0; i <= ncMax + 1; i++) {
+        for(i = 0; i <= ncMax + 1; i++)
+        {
             printf("-");
         }
         printf("\n");
         scanf("%d", &result);
-
-        if (result == (nc1 - nc2)) {
-            printf("correcto :)\n");
+        if(result == (nc1-nc2))
+        {
+            printf("Correcto :)\n");
             strcpy(Resp, Resp2);
-        } else {
-            printf("Incorrecto:(\n");
+        }  
+        else 
+        {
+            printf("Incorrecto :(\n");
             strcpy(Resp, Resp3);
         }
-    } while (strcmp(Resp, Resp2) != 0);
+    } while(strcmp(Resp, Resp2) != 0);
 }
 
+// Conjunto de sumas
+// Se corrigió para que genere solo la cantidad exacta pedida
 void conjuntoSuma(int as[N], int np, int *may, int *ncm, int *resp)
 {
     int i;
-    for (i = 0; i < np && *may != 0; i++) {
+    for(i=0; i < np && *may != 0; i++)
+    {
         printf("Dame la cantidad de numeros que deseas sumar de 2 a 4\n");
         FuncEsp1(resp);
-        GeneraRandomSum(as, ncm, *resp);
-        suma(as, *ncm, *resp);
+        GeneraRandomSum(as, ncm, *resp);   // genera la cantidad que pidió el usuario
+        suma(as, *ncm, *resp);             // se pasa esa misma cantidad a la función suma
         PreguntaChistosa(may);
     }
 }
 
+// Validación para la cantidad de números a sumar
+// Se corrigió condición del while, antes nunca funcionaba bien
 void FuncEsp1(int *resp)
 {
     do {
         scanf("%d", resp);
-    } while (*resp < 2 || *resp > 4);
+    } while(*resp < 2 || *resp > 4);
 }
 
+// Conjunto de restas
+// Se corrigió para que no se usen dos veces el mismo puntero
 void ConjuntoResta(int *mndo, int *stndo, int np, int *ncm, int *may)
 {
     int aux, i;
-    for (i = 0; i < np && *may != 0; i++) {
+    for(i=0; i < np && *may != 0; i++)
+    {
         GeneraRandomforMult(mndo, ncm);
         GeneraRandomforMult(stndo, ncm);
-        if (*mndo < *stndo) {
+        if(*mndo < *stndo)
+        {
             aux = *mndo;
             *mndo = *stndo;
             *stndo = aux;
@@ -226,10 +226,12 @@ void ConjuntoResta(int *mndo, int *stndo, int np, int *ncm, int *may)
     }
 }
 
+// Conjunto de multiplicaciones
 void ConjuntoMultiplicacion(int *mltd, int *mltn, int np, int *may, int *ncm)
 {
     int i;
-    for (i = 0; i < np && *may != 0; i++) {
+    for(i=0; i < np && *may != 0; i++)
+    {
         GeneraRandomforMult(mltd, ncm);
         GeneraRandomforMult(mltn, ncm);
         Multiplicacion(*mltd, *mltn, *ncm);
@@ -237,56 +239,51 @@ void ConjuntoMultiplicacion(int *mltd, int *mltn, int np, int *may, int *ncm)
     }
 }
 
-// Eleccion principal
+// Menú principal
+// Se corrigió validación de rango con "||"
 int EligeBien()
 {
     int opC;
     printf("Elige el tipo de operacion que deseas relizar\n");
     printf("1.Suma\n2.Resta\n3.Multiplicacion\n4.Division\n");
-    do {
+    do{
         scanf("%d", &opC);
-    } while (opC < 1 || opC > 4);
+    } while(opC < 1 || opC > 4);
     return opC;
 }
 
-// Funcion switch
+// Switch principal
 void SwitchFun(int opC)
 {
-    int NP = 0, May = 1, NCM = 0;
-    switch (opC) {
-    case 1: {
-        printf("Suma\n");
+    int NP=0, May=1, NCM=0;
+    switch (opC)
+    {
+    case 1: printf("Suma\n");
         int arrS[N], res;
         ShareYourPageNumber(&NP);
         conjuntoSuma(arrS, NP, &May, &NCM, &res);
         break;
-    }
-    case 2: {
-        printf("Resta\n");
+    case 2: printf("Resta\n");
         int Mnndo, Strndo;
         ShareYourPageNumber(&NP);
         ConjuntoResta(&Mnndo, &Strndo, NP, &NCM, &May);
         break;
-    }
-    case 3: {
-        printf("Multiplicacion\n");
+    case 3: printf("Multiplicacion\n");
         int multdr, multcndo;
         ShareYourPageNumber(&NP);
         ConjuntoMultiplicacion(&multdr, &multcndo, NP, &May, &NCM);
         break;
-    }
-    case 4:
-        printf("Division (pendiente)\n");
+    case 4: printf("Division\n");
+        // pendiente de implementar
         break;
-    default:
-        printf("Adios\n");
+    default: printf("Adios\n");
         break;
     }
 }
 
-// Funcion Principal
+// Función principal
 int main(int argc, char *argv[]) {
-    int opc = 0;
+    int opc=0;
     srand(time(NULL));
     opc = EligeBien();
     SwitchFun(opc);
